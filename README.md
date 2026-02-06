@@ -98,15 +98,7 @@ npm run test:e2e:ui    # Run E2E tests with UI
 - **Column**: To Do, In Progress, Done
 - **Attachments**: File uploads
 
-## 📊 Evaluation Criteria
-
-| Criteria                      | Weightage |
-| ----------------------------- | --------- |
-| WebSocket Implementation      | 10%       |
-| React Component Structure     | 10%       |
-| Testing                       | 50%       |
-| Code Quality & Best Practices | 20%       |
-| UI & UX                       | 10%       |
+#
 
 ## 📚 Tech Stack
 
