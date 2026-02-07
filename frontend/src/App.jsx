@@ -3,8 +3,10 @@ import Header from './components/Header.jsx';
 import KanbanBoard from './components/KanbanBoard.jsx';
 import TaskModal from './components/TaskModal.jsx';
 import ProgressChart from './components/ProgressChart.jsx';
+import AuthPage from './components/AuthPage.jsx';
 import { useTasks } from './context/TaskContext.jsx';
 import { useSocket } from './context/SocketContext.jsx';
+import { useAuth } from './context/AuthContext.jsx';
 import LoadingSpinner from './components/LoadingSpinner.jsx';
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
 
   const { isLoading } = useTasks();
   const { isConnected, connectionStatus } = useSocket();
+  const { isAuthenticated, isLoading: authLoading, user, logout } = useAuth();
 
   useEffect(() => {
     if (darkMode) {
@@ -38,6 +41,20 @@ function App() {
     setEditingTask(null);
   };
 
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Show auth page if not authenticated
+  if (!isAuthenticated) {
+    return <AuthPage />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
       <Header
@@ -48,6 +65,8 @@ function App() {
         isConnected={isConnected}
         showChart={showChart}
         onToggleChart={() => setShowChart(!showChart)}
+        user={user}
+        onLogout={logout}
       />
 
       <main className="container mx-auto px-4 py-6">

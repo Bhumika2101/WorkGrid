@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon, Plus, BarChart3, Wifi, WifiOff } from 'lucide-react';
+import { Sun, Moon, Plus, BarChart3, Wifi, WifiOff, LogOut, User } from 'lucide-react';
 
 function Header({
   darkMode,
@@ -9,6 +9,8 @@ function Header({
   isConnected,
   showChart,
   onToggleChart,
+  user,
+  onLogout,
 }) {
   return (
     <header className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
@@ -84,6 +86,26 @@ function Header({
               <Plus className="w-5 h-5" />
               <span className="hidden sm:inline">Add Task</span>
             </button>
+
+            {/* User Info and Logout */}
+            {user && (
+              <div className="flex items-center gap-2 ml-2 pl-3 border-l border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                  <User className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 hidden sm:inline">
+                    {user.username}
+                  </span>
+                </div>
+                <button
+                  onClick={onLogout}
+                  className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
+                  title="Logout"
+                  data-testid="logout-btn"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
