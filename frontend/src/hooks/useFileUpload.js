@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE } from '../utils/constants';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3002';
 
 /**
  * Custom hook for handling file uploads
@@ -41,8 +41,17 @@ export function useFileUpload() {
       const formData = new FormData();
       formData.append('file', file);
 
+      // Get auth token from localStorage
+      const token = localStorage.getItem('token');
+      
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
+        headers,
         body: formData,
       });
 
